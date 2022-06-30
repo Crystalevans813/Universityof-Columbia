@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Loan Qualifier Application.
 
@@ -7,6 +8,11 @@ Example:
     $ python app.py
 """
 import sys
+import os
+print('11:', sys.executable)
+for x in sys.path:
+    print(x)
+print()
 import fire
 import questionary
 from pathlib import Path
@@ -110,7 +116,16 @@ def save_qualifying_loans(qualifying_loans):
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
     # YOUR CODE HERE!
-
+    # ['Bank of Big - Starter Plus', '300000', '0.85', '0.39', '700', '4.35'], ['West Central Credit Union - Starter Plus', '300000', '0.8', '0.44', '650', '3.9']
+    file_path = "data/daily_rate_sheet_2.csv"
+    # open file
+    fout = open(file_path, 'w')
+    # write each line (loan info) to the file
+    for loan in qualifying_loans:
+        s = ','.join(loan) + '\n'
+        fout.write(s)
+    fout.close()
+    print('Wrote to file', file_path)
 
 def run():
     """The main function for running the script."""
@@ -125,6 +140,7 @@ def run():
     qualifying_loans = find_qualifying_loans(
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
+    print('128: ', qualifying_loans)
 
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)
