@@ -9,6 +9,7 @@ Example:
 """
 import sys
 import os
+#here the python interpeter was checked 
 print('11:', sys.executable)
 for x in sys.path:
     print(x)
@@ -113,11 +114,36 @@ def save_qualifying_loans(qualifying_loans):
 
     Args:
         qualifying_loans (list of lists): The qualifying bank loans.
+
+Given that I’m using the loan qualifier CLI, when I run the qualifier, then the tool should prompt the user to save the results as a CSV file.
+
+Given that no qualifying loans exist, when prompting a user to save a file, then the program should notify the user and exit.
+
+Given that I have a list of qualifying loans, when I’m prompted to save the results, then I should be able to opt out of saving the file.
+
+Given that I have a list of qualifying loans, when I choose to save the loans, the tool should prompt for a file path to save the file.
+
+Given that I’m using the loan qualifier CLI, when I choose to save the loans, then the tool should save the results as a CSV file.
+
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
     # YOUR CODE HERE!
     # ['Bank of Big - Starter Plus', '300000', '0.85', '0.39', '700', '4.35'], ['West Central Credit Union - Starter Plus', '300000', '0.8', '0.44', '650', '3.9']
-    file_path = "data/daily_rate_sheet_2.csv"
+    # exit if no loans
+    if len(qualifying_loans)==0:
+        print('Sorry, there are no available loans')
+        return
+
+    # ask user if they want to save the loan file
+    answer = input("Do you want to save the loan file? (y/n) ")
+    if answer=='n':
+        print('Bye')
+        return
+
+    #file_path = "data/daily_rate_sheet_2.csv"
+    # get the file path for saving the csv
+    file_path = input("Enter file name including path for saving: ")
+
     # open file
     fout = open(file_path, 'w')
     # write each line (loan info) to the file
@@ -140,7 +166,7 @@ def run():
     qualifying_loans = find_qualifying_loans(
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
-    print('128: ', qualifying_loans)
+    #print('128: ', qualifying_loans)
 
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)
